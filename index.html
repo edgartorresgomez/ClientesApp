@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>Clientes 2015</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width"/>
+	<link rel="stylesheet" type="text/css" href="archivos/estilo.css">
+
+	<script src="archivos/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		console.log('el documento está preparado');
+
+	  $("#busq").focusout(function(){ //
+	  	$("#caja-box").show();
+	  });
+	  $.ajax({
+				url : 'datos.json', // la URL para la petición
+				type : 'get',// especifica si será una petición POST o GET
+				dataType : 'json',// el tipo de información que se espera de respuesta
+				cache: false //{ id : 123 },// la información a enviar // (también es posible utilizar una cadena de datos)
+		})
+		.done(function(data){
+			var list_general="";
+			for (i in data.clientes){ // Recorro arreglo clientes
+				var valor_debo=0, fec_servicio="";
+				if (data.clientes[i].est_cliente =="A"){
+					cant_servicio = 0;
+					var fec_ultimo_abono ="";
+					for (j in data.clientes[i].servicio){ //Recorro los servicio de cada cliente
+						//fec_ultimo_abono="Sin Abono";
+						if(data.clientes[i].servicio[j].est_servicio=="A"){
+							cant_servicio=data.clientes[i].servicio[j].id_servicio;
+							valor_debo+=data.clientes[i].v_debe;
+							fec_servicio+=data.clientes[i].servicio[j].fec_servicio;
+							if (fec_ultimo_abono != undefined) {
+								for (k in data.clientes[i].pagos){
+									if (data.clientes[i].pagos[k].fecha >=fec_ultimo_abono) {
+												fec_ultimo_abono =data.clientes[i].pagos[k].fecha;
+									}
+								}
+								console.log(data.clientes[i].nombre+" - "+data.clientes[i].servicio[j].id_servicio+" - "+fec_ultimo_abono+"\n");
+							}
+						}
+					}
+					if (fec_ultimo_abono == "") {
+						fec_ultimo_abono="Sin Abono";
+					}
+					if (cant_servicio=="0"){
+						cant_servicio="Ninguno";
+					}
+					var link = data.clientes[i].id;
+					//var fec_ultimo_abono1= '12/31/2015';
+					var mm = parseInt(fec_ultimo_abono.substring(2,0));
+					var dd = fec_ultimo_abono.substring(5,3);
+					var aa = fec_ultimo_abono.substring(6);
+					var meses = new Array ("","ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC");
+					console.log(meses[mm]);
+					console.log(mm+' - '+dd+' - '+aa);
+					list_general +=(`
+										<div class='grid-art'>
+											<div id='${link}' class='grid-art-res'>
+												<div class='col-art1'>
+													<span id='cal' class='cal m d'>
+														<span class='a'>${aa}</span>
+														<span class='d'>${dd}</span>
+														<span class='m'>${meses[mm]}</span>
+													</span>
+												</div>
+												<div class='col-art2'>
+													<h3>${data.clientes[i].nombre} ${data.clientes[i].apellidos}</h3>
+													<p>Servicio (${cant_servicio}) ...</p>
+												</div>
+												<div class='col-art3'>
+													<div class='fecha-art'>${fec_ultimo_abono}</div>
+													<div><img src='archivos/carat-r-black.png' class='link-art' title='carat-r-black'></div>
+													<div class='debe-art'> $ ${valor_debo}</div>
+												</div>
+											</div>
+											<div id='reg${link}'class='fil-art2' style='display:none;'> Bienvenidos...</div>
+										</div>
+									`);
+				}	//}
+			}
+
+			$("#cont_general").html(list_general);
+			//$(".fil-art2").hide();
+			list_general="";
+			$("#cont_general").on('click','.grid-art-res', function(e){
+		  	e.preventDefault();
+				var alt_servicios= 0, id_usuario= 0, sw=false;
+				for (i in data.clientes){
+					//var sw= false;
+					id_usuario= parseInt($(this).attr("id"));
+					if (data.clientes[i].id == id_usuario ){
+						console.log(data.clientes[i].id+" " +id_usuario);
+							cant_servicio=0; alt_grid=0;
+							alt_grid=(parseInt($(".grid-art-res").css("height")));
+							console.log(alt_grid);
+							console.log("epa"+id_usuario);
+							sw = true;
+							var listado_id = "";
+							for (j in data.clientes[i].servicio){
+								cant_servicio=data.clientes[i].servicio[j].id_servicio;
+								listado_id += (`<div><p>
+																		${data.clientes[i].servicio[j].fec_servicio} ${data.clientes[i].servicio[j].concepto}
+																		${data.clientes[i].servicio[j].v_pago}</p>
+																</div>`);
+								console.log(data.clientes[i].servicio[j].id_servicio+" "+data.clientes[i].servicio[j].concepto);
+							}
+
+
+
+					}
+				}
+				$("#reg"+id_usuario).html(listado_id);
+				if (sw==true){
+					//sw=false;
+
+					$("#reg"+id_usuario).toggle("linear",function(){
+						//$(this).css("background-color","#876453");
+						$(this).css("height",(cant_servicio*20)+"px");
+					});
+				}
+
+
+			});
+			///////     Funcion que realiza Busqueda de usuario pofr Nmbre o por Id //////////////
+			$('#busq').on('keyup focus', function(e){
+				e.preventDefault();
+				$("#caja-box").hide();
+				//if(e.which == 13) {
+				var busqueda = ($("#busq").val());
+				var res_busqueda=""; //html_e="";
+				for (i in data.clientes){
+					var micadena="", valor_debo=0, fec_servicio="";
+					if (data.clientes[i].est_cliente =="A"){
+						micadena=(data.clientes[i].nombre);
+						longitudcadena=busqueda.length;
+						micadena2=micadena.substring(longitudcadena,0);
+						if (micadena2.toUpperCase()==busqueda.toUpperCase() || (data.clientes[i].id==busqueda)){
+							console.log(micadena2.toUpperCase()+" "+busqueda.toUpperCase() +"\n");
+							cant_servicio=0, fec_ultimo_abono="";
+							for (j in data.clientes[i].servicio){
+								if(data.clientes[i].servicio[j].est_servicio=="A"){
+									cant_servicio = data.clientes[i].servicio[j].id_servicio;
+									valor_debo+=data.clientes[i].v_debe;
+									fec_servicio+=data.clientes[i].servicio[j].fec_servicio;
+									fec_ultimo_abono ="";
+									if (fec_ultimo_abono != undefined) {
+										for (k in data.clientes[i].servicio[j].pagos){
+											if (data.clientes[i].servicio[j].pagos[k].fecha >=fec_ultimo_abono) {
+												fec_ultimo_abono =data.clientes[i].servicio[j].pagos[k].fecha;
+											}
+										}
+										console.log(data.clientes[i].nombre+" - "+data.clientes[i].servicio[j].id_servicio+" - "+fec_ultimo_abono+"\n");
+									}
+								}
+								console.log(cant_servicio);
+							}
+							if (fec_ultimo_abono == "") {
+								fec_ultimo_abono="Sin Abono";
+							}
+							if (cant_servicio=="0"){
+								cant_servicio="Ninguno";
+							}
+							var link = data.clientes[i].id; $("#fil-art2").hide();
+							res_busqueda +=(`
+															<div class='grid-art' id='${link}'>
+																<div class='col-art1'>
+																	<h3>${data.clientes[i].id}. ${data.clientes[i].nombre} ${data.clientes[i].apellidos}</h3>
+																	<p>Servicio (${cant_servicio}) ...</p>
+																</div>
+																<div class='col-art2'>
+																	<div class='fecha-art'>${fec_ultimo_abono}</div>
+																	<div><img src='archivos/carat-r-black.png' class='link-art' title='carat-r-black'></div>
+																	<div class='debe-art'> $ ${valor_debo}</div>
+																</div>
+																</div>
+																	<div id='fil-art2' class='fil-art2'> ...
+																</div>
+															</div>
+														`);
+						}
+					}
+					else{
+						console.log(data.clientes[i].nombre+" - Inactivo");
+					}
+				}
+				if (res_busqueda.length < 1){
+					res_busqueda=("<p>No resultado</p> ");
+				}
+				$("#cont_general").html(res_busqueda);
+			});
+		})
+		.fail(function(){
+			console.log ("false");
+			alert (data.cadena)
+		})
+		.always(function(){
+			console.log ("complete");
+		});
+	});
+	</script>
+</head>
+<body>
+  <header>
+
+  		<div class="menu"><img src="archivos/bars-black.png" class="logo1" title="Menu"></div>
+  		<div class="caja_busqueda"><input type="text" id="busq" name="busq" placeholder="busqueda"></div>
+
+  			<nav>
+			<a href="frm_clientes.html"><img src="archivos/plus-black.png" class="logo2"></a>
+  			<a href="index.html"> <img src="archivos/home-black.png" class="logo3" title="home-black"></a>
+
+  		</nav>
+
+
+
+
+
+
+
+
+
+  </header>
+  <section >
+  	<article id="cont_general" ></article>
+
+
+  </section>
+
+
+  	<div id="caja-box" class="caja-box"><span class="pag_nuevo"><a href="frm_clientes.html"><img src="archivos/plus-black.png"></a></span></div>
+
+
+
+</body>
+</html>
