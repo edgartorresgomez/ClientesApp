@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width"/>
+	<link rel="stylesheet" type="text/css" href="archivos/estilo.css">
+	<script src="archivos/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+	    	console.log('el documento está preparado');
+
+	    	$('form').submit (function(e){
+	    		e.preventDefault();
+	    		var datos = $(this).serialize();
+	    		console.log(datos);
+	    		$.ajax({
+				    url : 'procesar_datos.php', // la URL para la petición
+				 	type : 'post',// especifica si será una petición POST o GET
+				 	dataType : 'json',// el tipo de información que se espera de respuesta
+				    data : datos //{ id : 123 },// la información a enviar // (también es posible utilizar una cadena de datos)
+				})
+				.done(function(data){
+					
+					if (data.resultado==true){
+						alert(data.cadena);
+						console.log ("Funcion ejecutada correctamente, con Resultado: "+ data.resultado);
+					}
+					else {
+						alert(data.cadena)
+						console.log ("Funcion ejecutada correctamente, con Resultado: "+ data.resultado);
+					}
+				})
+				.fail(function(){
+					console.log ("false");
+					alert (data.cadena)
+				})
+				.always(function(){
+					console.log ("complete");
+				});
+				    // código a ejecutar si la petición es satisfactoria;
+				    // la respuesta es pasada como argumento a la función
+				return false;
+			});
+	    	
+		})
+	</script>
+</head>
+<body>
+	<header>
+		<h1>ETG SISTEMAS</h1>
+	</header>
+	<section class="contenido">
+		<section class="articulos">
+			<form>
+				<label for="nombre">Nombres:</label>
+			        	<input type="text" id="nombre" name="nombre" class="" placeholder="Ingrese su nombre">
+			        <label for="apellido">Apellidos:</label>    
+			        	<input type="text" id="apellido" name="apellido"placeholder="Ingrese sus apellidos">
+			        <label for="abono">Correo Electronico:</label> 
+			        	<input type="text" id="abono" name="abono" placeholder="Ingrese valor del abono">
+			       	 
+			            
+			             
+			           
+			              <input type="submit" value="Submit" name="submit">
+			            
+			          
+			</form>
+		</section>
+	</section>
+	<footer>
+		<h4> Pie de Pagina</h4>
+	</footer>
+	
+	
+	
+</body>
+</html>
+
+

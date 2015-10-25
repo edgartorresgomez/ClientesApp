@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width"/>
+	<link rel="stylesheet" type="text/css" href="archivos/estilo.css">
+	<script src="archivos/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+	    	console.log('el documento está preparado');
+
+	    	$('form').submit(function(e){
+	    		e.preventDefault();
+	    		var datos = $(this).serialize();
+	    		console.log(datos);
+	    		$.ajax({
+				    url : 'frm_clientes.php', // la URL para la petición
+				 	type : 'post',// especifica si será una petición POST o GET
+				 	dataType : 'json',// el tipo de información que se espera de respuesta
+				    data : datos //{ id : 123 },// la información a enviar // (también es posible utilizar una cadena de datos)
+				})
+				.done(function(data){
+					
+					if (data.resultado==true){
+						alert(data.cadena);
+						console.log ("Funcion ejecutada correctamente, con Resultado: "+ data.resultado);
+					}
+					else {
+						alert(data.cadena)
+						console.log ("Funcion ejecutada correctamente, con Resultado: "+ data.resultado);
+					}
+				})
+				.fail(function(){
+					
+						alert("error en funcion");
+					
+				})
+				.always(function(){
+					console.log ("complete");
+				});
+				    // código a ejecutar si la petición es satisfactoria;
+				    // la respuesta es pasada como argumento a la función
+				return false;
+			});
+	    	
+		})
+	</script>
+</head>
+<body>
+	<header>
+		<div class="menu"><img src="archivos/bars-black.png" class="logo1" title="Menu"></div>
+  		<div class="caja_busqueda"><h1>Ingreso...</h1></div>
+  		
+  			<nav>
+			<a href="frm_clientes.html"><img src="archivos/plus-black.png" class="logo2"></a>
+  			<a href="index.html"> <img src="archivos/home-black.png" class="logo3" title="home-black"></a>
+
+  		</nav>
+	</header>
+	<section class="contenido">
+		<section class="articulos">
+		<article>
+			<form>
+				<label for="nombre">Nombres:</label>
+			        <input type="text" id="nombre" name="nombre" class="" placeholder="Ingrese su nombre" required>
+			        <label for="apellido">Apellidos:</label>    
+			        	<input type="text" id="apellido" name="apellido"placeholder="Ingrese sus apellidos" required>
+			        <label for="mail">Correo Electronico:</label> 
+			        	<input type="email" id="email" name="email" placeholder="Ingrese su correo electronico" required>
+			       	 <label for="servicio">Descripcion de servicio:</label> 
+			            <textarea id="servicio" name="servicio" placeholder="Descripcion del servicio"></textarea>
+			            
+			             
+			           
+			              <input type="submit" value="Submit" name="submit">
+			            
+			          
+			</form></article>
+		</section>
+	</section>
+	
+	
+	
+	
+</body>
+</html>
+
+

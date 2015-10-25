@@ -1,0 +1,206 @@
+{
+  "clientes": {
+    "1": {
+      "id": 1,
+      "nombre": "Carlos Arturo",
+      "apellidos": "Torres ",
+      "mail": "carlos.torres@decameron.com",
+      "telf": 0,
+      "est_cliente": "A",
+      "pag_total": 30000,
+      "v_debe": 15000,
+      "obs_cliente": "",
+      "servicio": [
+        {
+          "id_servicio": 1,
+          "fec_servicio": "07/31/2015",
+          "est_servicio": "A",
+          "concepto": "Mensajero Hoteles Decameron S.A.",
+          "v_pago": 30000,
+          "obs_servicio": "",
+          "concepto": "Ingeniero Hoteles Decameron S.A.",
+          "obs_servicio": ""
+
+        },
+        {
+          "id_servicio": 2,
+          "fec_servicio": "08/20/2015",
+          "est_servicio": "A",
+          "concepto": "Ingeniero Hoteles Decameron S.A.",
+          "v_pago": 30000,
+          "obs_servicio": ""
+
+        }
+      ],
+      "pagos": [
+        {
+          "fecha": "08/07/2015",
+          "abono": 10000,
+          "obs_pago": ""
+        },
+        {
+          "fecha": "08/10/2015",
+          "abono": 10000,
+          "obs_pago": ""
+        }
+      ]
+    },
+    "2": {
+      "id": 2,
+      "nombre": "Fajib Habib",
+      "apellidos": "Villarreal Perez",
+      "mail": "fajib.villarreal@decameron.com",
+      "telf": 0,
+      "est_cliente": "A",
+      "pag_total": 30000,
+      "v_debe": 15000,
+      "obs_cliente": "",
+      "servicio": [
+        {
+          "id_servicio": 1,
+          "fec_servicio": "08/12/2015",
+          "est_servicio": "I",
+          "concepto": "Ingeniero Hoteles Decameron S.A.",
+          "v_pago": 30000,
+          "obs_servicio": ""
+
+        }
+      ],
+      "pagos": [
+        {}
+      ]
+    },
+    "3": {
+      "id": 3,
+      "nombre": "Edgar Enrique",
+      "apellidos": "Torres Gomez",
+      "mail": "edgar.torres@decameron.com",
+      "telf": 0,
+      "est_cliente": "A",
+      "pag_total": 30000,
+      "v_debe": 15000,
+      "obs_cliente": "",
+      "servicio": [
+        {
+          "id_servicio": 1,
+          "fec_servicio": "08/11/2015",
+          "est_servicio": "A",
+          "concepto": "Ingeniero Hoteles Decameron S.A.",
+          "v_pago": 30000,
+          "obs_servicio": ""
+
+        }
+      ],
+      "pagos": [
+        {
+          "fecha": "08/11/2015",
+          "abono": 10000,
+          "obs_pago": ""
+        },
+        {
+          "fecha": "08/20/2015",
+          "abono": 10000,
+          "obs_pago": ""
+        }
+      ]
+    },
+    "4": {
+      "id": 4,
+      "nombre": "Cristian",
+      "apellidos": "Contreras",
+      "mail": "cristian.contreras@decameron.com",
+      "telf": 0,
+      "est_cliente": "A",
+      "pag_total": 30000,
+      "v_debe": 15000,
+      "obs_cliente": "",
+      "servicio": [
+        {
+          "id_servicio": 1,
+          "fec_servicio": "08/02/2015",
+          "est_servicio": "A",
+          "concepto": "Ingeniero Hoteles Decameron S.A.",
+          "v_pago": 30000,
+          "obs_servicio": ""
+        },
+        {
+          "id_servicio": 2,
+          "fec_servicio": "08/20/2015",
+          "est_servicio": "A",
+          "concepto": "Ingeniero Hoteles Decameron S.A.",
+          "v_pago": 30000,
+          "obs_servicio": ""
+        }
+      ],
+      "pagos": [
+        {
+          "fecha": "08/23/2015",
+          "abono": 10000,
+          "obs_pago": ""
+        },
+        {
+          "fecha": "08/15/2015",
+          "abono": 10000,
+          "obs_pago": ""
+        }
+      ]
+
+    },
+    "5": {
+      "id": 5,
+      "nombre": "Julia Jose",
+      "apellidos": "Torres De La Hoz",
+      "mail": "julian.torres@decameron.com",
+      "telf": 0,
+      "est_cliente": "A",
+      "pag_total": 30000,
+      "v_debe": 15000,
+      "obs_cliente": "",
+      "servicio": [
+        {
+          "id_servicio": 1,
+          "fec_servicio": "08/24/2015",
+          "est_servicio": "A",
+          "concepto": "Julian estudiante inteligente.",
+          "v_pago": 30000,
+          "obs_servicio": ""
+        }
+      ],
+      "pagos": [
+        {
+          "fecha": "08/24/2015",
+          "abono": 15000,
+          "obs_pago": ""
+        }
+      ]
+    },
+    "6": {
+      "id": 6,
+      "nombre": "Carlos Alberto",
+      "apellidos": "Jimenez Peres",
+      "mail": "carlos.jimenez@decameron.com",
+      "telf": 0,
+      "est_cliente": "A",
+      "pag_total": 30000,
+      "v_debe": 15000,
+      "obs_cliente": "",
+      "servicio": [
+        {
+          "id_servicio": 1,
+          "fec_servicio": "08/24/2015",
+          "est_servicio": "A",
+          "concepto": "carlos debe hasta la vida.",
+          "v_pago": 30000,
+          "obs_servicio": ""
+        }
+      ],
+      "pagos": [
+        {
+          "fecha": "08/24/2015",
+          "abono": 15000,
+          "obs_pago": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+    var pagos= [
+      {
+        "fecha": "08/07/2015",
+        "abono": 10000,
+        "obs_pago": ""
+      },
+      {
+        "fecha": "08/10/2015",
+        "abono": 10000,
+        "obs_pago": ""
+      }
+    ];
+
+
+
+    function  p_debe(debe){
+      var saludo="OK"; suma_abonos=0; saldo=0;
+      for(i in pagos){
+        suma_abonos += pagos[i].abono;
+      }
+      saldo = debe - suma_abonos;
+      return saldo;
+    }
+    saldo = p_debe(50000);
+
+    alert(saldo);
+
+    </script>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+    </script>
+  </body>
+</html>

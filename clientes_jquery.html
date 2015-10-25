@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML5 - Clientes</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width"/>
+	<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+	<script>
+	$(function() {
+		console.log("Documento listo");
+		//$("button").click(function(){
+			var res ="<h2> Clientes </h2>";
+			$.getJSON('datos.json', null, function(data) {
+				
+			    console.log(data.clientes[1].nombre+" "+data.clientes[1].apellidos+" "+data.clientes[1].servicio.concepto+" "+data.clientes[1].servicio.pagos[1].fecha);
+			    //res += "<h3>" +data.nombre+ " " +data.apellidos+ "<h3>";
+			    for (i=0; i<data.clientes.length; ++i){
+			    	res += ("<p>"+data.clientes[i].nombre+ " " +data.clientes[i].apellidos+"</p>");
+
+			    }
+
+			    $.each(data.clientes, function(i, item) {
+	    			
+			    	//res += ("<p>"+item.nombre+ " " +item.apellidos+"</p>");
+			    	//res += (" <br/> " );
+
+	    			//alert(item.fecha+" "+item.abono);
+	    			//alert(data.servicio.pagos[i].fecha)
+				});
+				$("#detalles").html(res);
+				// ************EJEMPLO CON FOR ***********
+				//for(usuario in data.servicio.pagos){ 
+				//	$("#detalles").append(data.servicio.pagos[usuario].fecha+" <br />"); 
+				//} 
+			});
+
+			
+		//});
+
+	});
+
+
+	</script>
+
+</head>
+<body>
+
+
+
+<div id="detalles"></div>
+
+
+
+</body>
+</html>

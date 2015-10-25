@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>Clientes 2015</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width"/>
+	<link rel="stylesheet" type="text/css" href="archivos/estilo.css">
+	<script src="archivos/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+	$(function() {
+	    console.log('el documento está preparado');
+	    $("#busq").focusout(function(){
+	    	$("#caja-box").show();
+	    	
+	    });
+
+
+	    
+	    $.ajax({
+				    url : 'datos.json', // la URL para la petición
+				 	type : 'get',// especifica si será una petición POST o GET
+				 	dataType : 'json',// el tipo de información que se espera de respuesta
+				    cache: false //{ id : 123 },// la información a enviar // (también es posible utilizar una cadena de datos)
+		})
+		.done(function res_arreglo(data){
+			//console.log(data.clientes);
+			var list_general="";
+			for (i in data.clientes){
+						//console.log(data.clientes[i].nombre);
+				if (data.clientes[i].servicio.v_debe > 0){
+					//resta = data.clientes[i].servicio.v_pago - data.clientes[i].servicio.v_debe;
+					//alert(i+". "+data.clientes[i].servicio.v_pago+" - "+data.clientes[i].servicio.v_debe+" = "+resta+"\n");
+					concepto = data.clientes[i].servicio.concepto.substring(65,0);
+
+
+					var link = data.clientes[i].id;
+					
+					list_general +=("<div name='ok' class='grid-art' id="+link+"><div class='col-art1'><h3>"+data.clientes[i].id+". "+data.clientes[i].nombre+" "+data.clientes[i].apellidos+"</h3><p>"+concepto+" ...</p></div><div class='col-art2'><div class='fecha-art'>12/08/2015</div><div><img src='archivos/carat-r-black.png' class='link-art' title='carat-r-black'></div><div class='debe-art'> $ "+data.clientes[i].servicio.v_debe+"</div></div></div>");
+				}
+
+
+			}
+
+			$("#cont_general").html(list_general);
+			$('#busq').on('keyup focus', function(e){
+				e.preventDefault();
+				$("#caja-box").hide();
+				
+				//if(e.which == 13) {
+				var busqueda = ($("#busq").val());
+				var res_busqueda=""; //html_e="";
+
+				for (i in data.clientes){
+					var micadena;
+					micadena=(data.clientes[i].nombre);	
+					longitudcadena=busqueda.length;
+					micadena2=micadena.substring(longitudcadena,0);
+					if (micadena2.toUpperCase()==busqueda.toUpperCase() || (data.clientes[i].id==busqueda)){
+						if (data.clientes[i].servicio.v_debe > 0){
+							var link = data.clientes[i].id;
+							concepto = data.clientes[i].servicio.concepto.substring(65,0);
+							res_busqueda +=("<div class='grid-art' id="+link+"><div class='col-art1'><h3>"+data.clientes[i].id+". "+data.clientes[i].nombre+" "+data.clientes[i].apellidos+"</h3><p>"+concepto+" ...</p></div><div class='col-art2'><div class='fecha-art'>12/08/2015</div><div><img src='archivos/carat-r-black.png' class='link-art' title='carat-r-black'></div><div class='debe-art'> $ "+data.clientes[i].servicio.v_debe+"</div></div></div>");
+						}
+
+					}
+				}
+				//console.log(res_busqueda.length);
+				if (res_busqueda.length<1){								
+					res_busqueda=("<p>No resultado</p> ");
+				}
+				//console.log(res_busqueda);	
+				
+				$("#cont_general").html(res_busqueda);
+
+				//}		
+			});
+		})
+		.fail(function(){
+			console.log ("false");
+			alert (data.cadena)
+		})
+			.always(function(){
+			console.log ("complete");
+		});
+		$("#cont_general").on('click','.grid-art', function(e){
+	    			e.preventDefault();
+	    			//$(this).cursor("pointer");
+	    			filtro_id = "por aqui es la cosa";
+	    			console.log("click");
+	    			console.log($(this).attr("id"));
+	    			$("#cont_general").html(filtro_id);
+
+	    		});
+		 
+    // código a ejecutar si la petición es satisfactoria;
+				    // la respuesta es pasada como argumento a la función
+	});
+	</script>
+</head>
+<body>
+  <header>
+  	<img src="archivos/bars-black.png" class="logo1" title="Menu">
+  		<nav>
+			<a href="frm_clientes.html"><img src="archivos/plus-black.png" class="logo2"></a>
+  			<a href="index.html"> <img src="archivos/home-black.png" class="logo3" title="home-black"></a>
+
+  		</nav>	
+    <h1>ETG SISTEMAS</h1>
+    <div class="caja_busqueda"><input type="text" id="busq" name="busq" placeholder="busqueda"><input type="hidden" name="busq2"></div>
+    
+  </header>
+  <section >
+  	<article id="cont_general" ></article>
+  
+
+  </section>
+  
+  
+  	<div id="caja-box" class="caja-box"><span class="pag_nuevo"><a href="frm_clientes.html"><img src="archivos/plus-black.png"></a></span></div>
+  	
+  
+
+</body>
+</html>
